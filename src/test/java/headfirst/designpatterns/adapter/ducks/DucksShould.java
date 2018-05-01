@@ -80,15 +80,21 @@ public class DucksShould {
         // JunitParams calls provider methods before mockito inits its mock, so using parameters here implies a rand set at null instead of mocked random...
         for (Turkey turkey : turkeysProvider()) {
             messages = ArgumentCaptor.forClass(String.class);
-            should.assertThat(turkey).describedAs(turkey.getClass().getSimpleName()).isInstanceOf(Turkey.class);
+            should.assertThat(turkey)
+                    .describedAs(turkey.getClass().getSimpleName())
+                    .isInstanceOf(Turkey.class);
 
             doNothing().when(mockedOut).println(messages.capture());
-            doReturn(0).when(random).nextInt(anyInt());
+            doReturn(0).when(random).nextInt(anyInt()); // is equal to return provided by default mock configuration : RETURNS_SMART_NULLS
             turkey.fly();
-            should.assertThat(messages.getAllValues()).describedAs(turkey.getClass().getSimpleName()).allMatch(s -> s.contains("flying"));
+            should.assertThat(messages.getValue())
+                    .describedAs(turkey.getClass().getSimpleName())
+                    .contains("flying");
 
             turkey.gobble();
-            should.assertThat(messages.getValue()).describedAs(turkey.getClass().getSimpleName()).matches(".*(Quack|Gobble).*");
+            should.assertThat(messages.getValue())
+                    .describedAs(turkey.getClass().getSimpleName())
+                    .matches(".*(Quack|Gobble).*");
         }
     }
 
