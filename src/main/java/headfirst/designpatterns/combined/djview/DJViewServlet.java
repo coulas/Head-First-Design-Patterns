@@ -1,8 +1,16 @@
+// This code is from Head First Design Patterns first edition
+// and has been removed from the second edition.
+//
+// Left here for those with the first edition, but no guarantees it 
+// will work.
+//
+// 9/15/2020
+//
 package headfirst.designpatterns.combined.djview;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
-import java.io.IOException;
+import java.io.*;
 
 public class DJViewServlet extends HttpServlet {
 
